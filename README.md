@@ -1,7 +1,7 @@
 # KwikQA for GitHub Actions
 
-When your Playwright, Cypress, or WebdriverIO tests fail, this Action runs
-[KwikQA](https://kwikqa.com) on the run:
+When your Playwright, Cypress, WebdriverIO, Java, pytest, or Cucumber-JVM tests fail, this Action
+runs [KwikQA](https://kwikqa.com) on the run:
 
 - **Diagnosis.** It groups the failures by shared cause and diagnoses each group: who owns it (test
   code, application, or environment) and how strong the evidence is.
@@ -40,8 +40,8 @@ reporter: [["list"], ["json", { outputFile: "test-results/kwikqa-report.json" }]
 use: { trace: "retain-on-failure" },
 ```
 
-Cypress and WebdriverIO setup, and every other report format KwikQA reads, are in the
-[KwikQA guide](https://kwikqa.com/docs/).
+Setup for Cypress, WebdriverIO, and JUnit reports from Maven, Gradle, or pytest, and every other
+report format KwikQA reads, is in the [KwikQA guide](https://kwikqa.com/docs/).
 
 ## Inputs
 
@@ -92,7 +92,12 @@ webhook, and never prints one.
   messages to your webhooks.
 - **KwikQA.** With a token, KwikQA's diagnosis requests carry a redacted evidence packet, and each
   request's preview is printed in the job's log. The KwikQA service keeps account, usage, and
-  request metadata only. Without a token, or with `local: true`, nothing goes to KwikQA.
+  request metadata, and the run's result counts: codes and numbers such as the kind of failure and
+  whether a fix held, never test names, file paths, or code. A company's admins can turn result
+  counts off for everyone at https://kwikqa.com/dashboard/organization/#settings, you can for a
+  personal account at https://kwikqa.com/dashboard/account/, and a job can by setting
+  `KWIKQA_RESULTS: off` in its `env`. Without a token, or with `local: true`, nothing goes
+  to KwikQA.
 - **The details.** See [Security and data handling](https://kwikqa.com/security/) and the
   [privacy policy](https://kwikqa.com/privacy/).
 
